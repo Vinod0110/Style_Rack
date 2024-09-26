@@ -21,7 +21,7 @@ export const protectRoute = async(req,res,next)=>{
        next();
        } catch (error) {
            if(error.name === "TokenExpiredError"){
-            return res.status(401).json({message:"Unauthorized- access token expired"})
+            return res.status(400).json({message:"Unauthorized- access token expired"})
            }
            throw error;
        }
@@ -29,7 +29,7 @@ export const protectRoute = async(req,res,next)=>{
     } catch (error) {
         console.log("Error in protectRoute controlller", error.message);
         res
-          .status(401)
+          .status(400)
           .json({ message: "Internal server error", error: error.message });
     }
 };
@@ -38,6 +38,6 @@ export const adminRoute = (req,res,next)=>{
     if (req.user && req.user.role === "admin") {
         next();        
     } else {
-        return res.status(403).json({message:"Access denied- Admin only"})
+        return res.status(400).json({message:"Access denied- Admin only"})
     }
 }
