@@ -50,7 +50,6 @@ export const useUserStrore = create((set, get) => ({
     try {
       const response = await axios.get("/auth/profile");
       set({ user: response.data, checkingAuth: false });
-      console.log("response",response);
 
     } catch (error) {
       console.log(error.message);
