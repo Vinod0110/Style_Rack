@@ -1,5 +1,5 @@
 import React from "react";
-import { Minus, Plus, Trash, IndianRupee } from "lucide-react";
+import { Minus, Plus, Trash} from "lucide-react";
 import { useCartStore } from "../stores/useCartStore";
 
 const CartItem = ({item}) => {

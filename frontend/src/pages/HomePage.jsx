@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import CategoryItem from '../components/categoryItem';
+import CategoryItem from '../components/CategoryItem';
 import { useProductStore } from '../stores/useProductStore';
 import FeaturedProducts from '../components/FeaturedProducts';
 
