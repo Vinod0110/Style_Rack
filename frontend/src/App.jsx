@@ -23,9 +23,9 @@ useEffect(()=>{
 },[checkAuth]);
 
 useEffect(()=>{
-  // if(!user) return;
+  if(!user) return;
   getCartItems()
-},[getCartItems]);
+},[getCartItems,user]);
 
 
 

@@ -115,15 +115,15 @@ export const logout = async (req, res) => {
 
 export const refreshToken = async (req, res) => {
   try {
-    const refreshToken = req?.cookies?.refreshToken;
+    const refreshToken = req.cookies.refreshToken;
     if (!refreshToken) {
-      return res.status(400).json({ message: "No refresh token provided" });
+      return res.status(401).json({ message: "No refresh token provided" });
     }
     const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
     const storedToken = await redis.get(`refresh_token:${decoded.userId}`);
 
     if (storedToken !== refreshToken) {
-      return res.status(400).json({ message: "Invalid refresh token" });
+      return res.status(401).json({ message: "Invalid refresh token" });
     }
     const accessToken = jwt.sign(
       { userId: decoded?.userId },

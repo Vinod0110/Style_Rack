@@ -64,7 +64,7 @@ export const useUserStrore = create((set, get) => ({
     set({ checkingAuth: true });
     try {
         const response = await axios.post("/auth/refresh-token");
-        set({user: response.data, checkingAuth: false });
+        set({ checkingAuth: false });
         return response.data;
     } catch (error) {
         set({ user: null, checkingAuth: false });
@@ -78,7 +78,7 @@ axios.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    if (error.response?.status === 400 && !originalRequest._retry) {
+    if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {

@@ -7,7 +7,7 @@ export const protectRoute = async(req,res,next)=>{
        const accessToken =  req?.cookies?.accessToken;
 
        if(!accessToken){
-        return res.status(400).json({message:"Unauthorized- No access token provided"})
+        return res.status(401).json({message:"Unauthorized- No access token provided"})
        };
        
        try {
@@ -15,13 +15,13 @@ export const protectRoute = async(req,res,next)=>{
        const user = await User.findById(decoded.userId).select("-password");
 
        if(!user){
-        return res.status(400).json({message: "User not found"});
+        return res.status(401).json({message: "User not found"});
        };
        req.user = user;
        next();
        } catch (error) {
            if(error.name === "TokenExpiredError"){
-            return res.status(400).json({message:"Unauthorized- access token expired"})
+            return res.status(401).json({message:"Unauthorized- access token expired"})
            }
            throw error;
        }
@@ -29,8 +29,8 @@ export const protectRoute = async(req,res,next)=>{
     } catch (error) {
         console.log("Error in protectRoute controlller", error.message);
         res
-          .status(400)
-          .json({ message: "Internal server error", error: error.message });
+          .status(401)
+          .json({ message: "Unauthorized - Invalid access token" });
     }
 };
 
@@ -38,6 +38,6 @@ export const adminRoute = (req,res,next)=>{
     if (req.user && req.user.role === "admin") {
         next();        
     } else {
-        return res.status(400).json({message:"Access denied- Admin only"})
+        return res.status(403).json({message:"Access denied- Admin only"})
     }
 }
